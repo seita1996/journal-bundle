@@ -1,0 +1,10 @@
+{
+  "id": "journal-bundle",
+  "name": "Journal Bundle",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Bundle daily notes and linked notes into a single markdown export.",
+  "author": "seitaro",
+  "authorUrl": "https://github.com/seita1996",
+  "isDesktopOnly": false
+}
