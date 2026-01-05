@@ -9,7 +9,7 @@ const buildOptions = {
   bundle: true,
   external: ["obsidian", ...builtinModules],
   format: "cjs",
-  target: "es2018",
+  target: "es2019",
   outfile: "main.js",
   sourcemap: watch ? "inline" : false,
   banner: {

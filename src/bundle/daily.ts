@@ -1,5 +1,6 @@
-import { App, TFile, moment } from "obsidian";
+import { App, TFile } from "obsidian";
 import { JournalBundleSettings } from "../settings";
+import moment from "../utils/moment";
 
 function normalizeFolderPrefix(folder: string): string {
   const trimmed = folder.trim();

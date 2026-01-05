@@ -1,4 +1,4 @@
-import { App, Notice, TFile, moment } from "obsidian";
+import { App, Notice, TFile } from "obsidian";
 import { JournalBundleSettings } from "../settings";
 import { listDailyFiles } from "./daily";
 import { compileExcludePatterns, shouldExcludeFile, stripFrontmatter } from "./filters";
@@ -11,6 +11,7 @@ import {
   buildUnresolvedSection,
 } from "./formatter";
 import { BundleStats, DailyEntry, LinkedEntry, BundleRange } from "./types";
+import moment from "../utils/moment";
 
 function normalizeFolderPrefix(folder: string): string {
   const trimmed = folder.trim();

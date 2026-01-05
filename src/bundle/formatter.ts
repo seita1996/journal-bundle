@@ -1,6 +1,7 @@
-import { moment, TFile } from "obsidian";
+import { TFile } from "obsidian";
 import { JournalBundleSettings } from "../settings";
 import { BundleStats, DailyEntry, LinkedEntry } from "./types";
+import moment from "../utils/moment";
 
 function formatSourceComment(file: TFile, referencedBy?: Set<string>): string {
   if (!referencedBy || referencedBy.size === 0) {

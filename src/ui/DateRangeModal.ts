@@ -1,4 +1,5 @@
-import { App, Modal, Setting, Notice, moment } from "obsidian";
+import { App, Modal, Setting, Notice } from "obsidian";
+import moment from "../utils/moment";
 
 export class DateRangeModal extends Modal {
   private onSubmit: (from: string, to: string) => void | Promise<void>;

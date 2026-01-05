@@ -1,11 +1,12 @@
-import { Plugin, moment } from "obsidian";
+import { Plugin } from "obsidian";
 import { JournalBundleSettingTab, JournalBundleSettings, DEFAULT_SETTINGS } from "./settings";
 import { DateRangeModal } from "./ui/DateRangeModal";
 import { LastNDaysModal } from "./ui/LastNDaysModal";
 import { exportDiaryBundle } from "./bundle/exporter";
+import moment from "./utils/moment";
 
 export default class JournalBundlePlugin extends Plugin {
-  settings: JournalBundleSettings;
+  settings!: JournalBundleSettings;
 
   async onload() {
     await this.loadSettings();

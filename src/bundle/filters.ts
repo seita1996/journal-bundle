@@ -31,7 +31,7 @@ function extractFrontmatterTags(frontmatter: unknown): string[] {
   return [];
 }
 
-function extractInlineTags(cache?: CachedMetadata): string[] {
+function extractInlineTags(cache?: CachedMetadata | null): string[] {
   if (!cache?.tags) {
     return [];
   }
@@ -56,7 +56,7 @@ export function compileExcludePatterns(patterns: string[]): { regexes: RegExp[];
 
 export function shouldExcludeFile(
   file: TFile,
-  cache: CachedMetadata | null,
+  cache: CachedMetadata | null | undefined,
   settings: JournalBundleSettings,
   excludeRegexes: RegExp[]
 ): boolean {
