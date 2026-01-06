@@ -383,14 +383,13 @@ function buildBundleHeader(settings, range, includeLinkedNotes) {
   const createdAt = moment_default().format("YYYY-MM-DDTHH:mm:ssZ");
   return [
     "---",
-    "bundle:",
-    `  from: ${range.from}`,
-    `  to: ${range.to}`,
-    `  depth: ${settings.depth}`,
-    `  includeLinkedNotes: ${includeLinkedNotes}`,
-    `  createdAt: ${createdAt}`,
-    `  dailyFolder: ${settings.dailyFolder}`,
-    `  exportFolder: ${settings.exportFolder}`,
+    `from: ${range.from}`,
+    `to: ${range.to}`,
+    `depth: ${settings.depth}`,
+    `includeLinkedNotes: ${includeLinkedNotes}`,
+    `createdAt: ${createdAt}`,
+    `dailyFolder: ${settings.dailyFolder}`,
+    `exportFolder: ${settings.exportFolder}`,
     "---",
     ""
   ].join("\n");

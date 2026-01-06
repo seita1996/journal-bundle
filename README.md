@@ -50,6 +50,7 @@ The output includes:
 - Deduplicated linked notes
 - Source annotations (`<!-- source: ... -->`)
 - Optional unresolved links section
+- Frontmatter metadata (from/to/depth/etc.)
 
 ---
 
