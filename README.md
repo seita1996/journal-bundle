@@ -6,12 +6,15 @@ This plugin runs entirely **locally** and never sends your data anywhere.
 
 > Ideal for weekly reviews, journaling, and AI-assisted reflection.
 
+![tutorial](https://github.com/user-attachments/assets/fdabc2d8-193e-4b6a-84e0-b913de0da717)
+
+
 ---
 
 ## Why Journal Bundle?
 
 - Review a week or month of daily notes in one place
-- Create a single Markdown file to feed into ChatGPT / Claude
+- Create a single Markdown file to feed into ChatGPT / Claude / Gemini / NotebookLM etc...
 - Archive context-heavy work logs or journals
 - Prepare clean summaries for reflection or reporting
 
