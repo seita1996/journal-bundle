@@ -14,11 +14,11 @@ export class LastNDaysModal extends Modal {
   onOpen() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.createEl("h2", { text: "Export last N days" });
+    contentEl.createEl("h2", { text: "Export last n days" });
 
     let inputEl: HTMLInputElement;
     new Setting(contentEl)
-      .setName("Days")
+      .setName("Number of days")
       .setDesc("Use a preset or type a number.")
       .addText((text) => {
         inputEl = text.inputEl;

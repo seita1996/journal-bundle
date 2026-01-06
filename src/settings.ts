@@ -48,11 +48,11 @@ export class JournalBundleSettingTab extends PluginSettingTab {
     const { containerEl } = this;
     containerEl.empty();
 
-    containerEl.createEl("h2", { text: "Journal Bundle Settings" });
+    ;
 
     new Setting(containerEl)
       .setName("Daily folder")
-      .setDesc("Only YYYY-MM-DD.md files under this folder are treated as daily notes.")
+      .setDesc("Only yyyy-mm-dd.md files under this folder are treated as daily notes.")
       .addText((text) =>
         text
           .setPlaceholder("Daily/")
@@ -65,7 +65,7 @@ export class JournalBundleSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Export folder")
-      .setDesc("Bundled markdown output is saved here.")
+      .setDesc("Bundled Markdown output is saved here.")
       .addText((text) =>
         text
           .setPlaceholder("Exports/")
@@ -88,7 +88,7 @@ export class JournalBundleSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Link depth")
-      .setDesc("MVP supports depth 1 only. Higher values are ignored.")
+      .setDesc("Supports depth 1 only. Higher values are ignored.")
       .addText((text) =>
         text
           .setPlaceholder("1")
@@ -105,7 +105,7 @@ export class JournalBundleSettingTab extends PluginSettingTab {
       .setDesc("Comma-separated path prefixes to skip.")
       .addTextArea((text) =>
         text
-          .setPlaceholder("Templates/, Attachments/")
+          .setPlaceholder("Example: templates/, attachments/")
           .setValue(this.plugin.settings.excludeFolders.join(", "))
           .onChange(async (value) => {
             this.plugin.settings.excludeFolders = parseCsv(value);
@@ -118,7 +118,7 @@ export class JournalBundleSettingTab extends PluginSettingTab {
       .setDesc("Comma-separated tags to skip (# is optional).")
       .addTextArea((text) =>
         text
-          .setPlaceholder("archived, draft")
+          .setPlaceholder("Example: archived, draft")
           .setValue(this.plugin.settings.excludeTags.join(", "))
           .onChange(async (value) => {
             this.plugin.settings.excludeTags = parseCsv(value);
@@ -131,7 +131,7 @@ export class JournalBundleSettingTab extends PluginSettingTab {
       .setDesc("Comma-separated regex patterns tested against file paths.")
       .addTextArea((text) =>
         text
-          .setPlaceholder(".*private.*, ^Scratch/")
+          .setPlaceholder("Example: .*private.*, ^scratch/")
           .setValue(this.plugin.settings.excludePatterns.join(", "))
           .onChange(async (value) => {
             this.plugin.settings.excludePatterns = parseCsv(value);

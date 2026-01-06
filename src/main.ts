@@ -15,7 +15,7 @@ export default class JournalBundlePlugin extends Plugin {
 
     this.addCommand({
       id: "export-diary-range-bundle",
-      name: "Export Diary Range Bundle...",
+      name: "Export diary range bundle...",
       callback: () => {
         new DateRangeModal(this.app, async (from, to) => {
           await exportDiaryBundle(this.app, this.settings, { from, to });
@@ -25,7 +25,7 @@ export default class JournalBundlePlugin extends Plugin {
 
     this.addCommand({
       id: "export-last-n-days-bundle",
-      name: "Export Last N Days Bundle...",
+      name: "Export last n days bundle...",
       callback: () => {
         new LastNDaysModal(this.app, async (days) => {
           const today = moment().startOf("day");
@@ -42,7 +42,8 @@ export default class JournalBundlePlugin extends Plugin {
   onunload() {}
 
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    const data = (await this.loadData()) as Partial<JournalBundleSettings> | null;
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, data ?? {});
   }
 
   async saveSettings() {

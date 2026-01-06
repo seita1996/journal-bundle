@@ -47,9 +47,9 @@ export function compileExcludePatterns(patterns: string[]): { regexes: RegExp[];
     }
     try {
       regexes.push(new RegExp(pattern));
-    } catch (error) {
-      invalid.push(pattern);
-    }
+  } catch {
+    invalid.push(pattern);
+  }
   }
   return { regexes, invalid };
 }

@@ -52,14 +52,14 @@ var JournalBundleSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "Journal Bundle Settings" });
-    new import_obsidian.Setting(containerEl).setName("Daily folder").setDesc("Only YYYY-MM-DD.md files under this folder are treated as daily notes.").addText(
+    ;
+    new import_obsidian.Setting(containerEl).setName("Daily folder").setDesc("Only yyyy-mm-dd.md files under this folder are treated as daily notes.").addText(
       (text) => text.setPlaceholder("Daily/").setValue(this.plugin.settings.dailyFolder).onChange(async (value) => {
         this.plugin.settings.dailyFolder = value.trim();
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian.Setting(containerEl).setName("Export folder").setDesc("Bundled markdown output is saved here.").addText(
+    new import_obsidian.Setting(containerEl).setName("Export folder").setDesc("Bundled Markdown output is saved here.").addText(
       (text) => text.setPlaceholder("Exports/").setValue(this.plugin.settings.exportFolder).onChange(async (value) => {
         this.plugin.settings.exportFolder = value.trim();
         await this.plugin.saveSettings();
@@ -71,7 +71,7 @@ var JournalBundleSettingTab = class extends import_obsidian.PluginSettingTab {
         await this.plugin.saveSettings();
       })
     );
-    new import_obsidian.Setting(containerEl).setName("Link depth").setDesc("MVP supports depth 1 only. Higher values are ignored.").addText(
+    new import_obsidian.Setting(containerEl).setName("Link depth").setDesc("Supports depth 1 only. Higher values are ignored.").addText(
       (text) => text.setPlaceholder("1").setValue(String(this.plugin.settings.depth)).onChange(async (value) => {
         const parsed = Number.parseInt(value, 10);
         this.plugin.settings.depth = Number.isFinite(parsed) ? parsed : 1;
@@ -79,19 +79,19 @@ var JournalBundleSettingTab = class extends import_obsidian.PluginSettingTab {
       })
     );
     new import_obsidian.Setting(containerEl).setName("Exclude folders").setDesc("Comma-separated path prefixes to skip.").addTextArea(
-      (text) => text.setPlaceholder("Templates/, Attachments/").setValue(this.plugin.settings.excludeFolders.join(", ")).onChange(async (value) => {
+      (text) => text.setPlaceholder("Example: templates/, attachments/").setValue(this.plugin.settings.excludeFolders.join(", ")).onChange(async (value) => {
         this.plugin.settings.excludeFolders = parseCsv(value);
         await this.plugin.saveSettings();
       })
     );
     new import_obsidian.Setting(containerEl).setName("Exclude tags").setDesc("Comma-separated tags to skip (# is optional).").addTextArea(
-      (text) => text.setPlaceholder("archived, draft").setValue(this.plugin.settings.excludeTags.join(", ")).onChange(async (value) => {
+      (text) => text.setPlaceholder("Example: archived, draft").setValue(this.plugin.settings.excludeTags.join(", ")).onChange(async (value) => {
         this.plugin.settings.excludeTags = parseCsv(value);
         await this.plugin.saveSettings();
       })
     );
     new import_obsidian.Setting(containerEl).setName("Exclude patterns").setDesc("Comma-separated regex patterns tested against file paths.").addTextArea(
-      (text) => text.setPlaceholder(".*private.*, ^Scratch/").setValue(this.plugin.settings.excludePatterns.join(", ")).onChange(async (value) => {
+      (text) => text.setPlaceholder("Example: .*private.*, ^scratch/").setValue(this.plugin.settings.excludePatterns.join(", ")).onChange(async (value) => {
         this.plugin.settings.excludePatterns = parseCsv(value);
         await this.plugin.saveSettings();
       })
@@ -145,12 +145,12 @@ var DateRangeModal = class extends import_obsidian3.Modal {
     const { contentEl } = this;
     contentEl.empty();
     contentEl.createEl("h2", { text: "Export diary range" });
-    new import_obsidian3.Setting(contentEl).setName("From").setDesc("YYYY-MM-DD").addText((text) => {
+    new import_obsidian3.Setting(contentEl).setName("Start date").setDesc("Use yyyy-mm-dd.").addText((text) => {
       text.setPlaceholder("2026-01-01").onChange((value) => {
         this.fromValue = value.trim();
       });
     });
-    new import_obsidian3.Setting(contentEl).setName("To").setDesc("YYYY-MM-DD").addText((text) => {
+    new import_obsidian3.Setting(contentEl).setName("End date").setDesc("Use yyyy-mm-dd.").addText((text) => {
       text.setPlaceholder("2026-01-07").onChange((value) => {
         this.toValue = value.trim();
       });
@@ -160,15 +160,15 @@ var DateRangeModal = class extends import_obsidian3.Modal {
         const from = this.fromValue;
         const to = this.toValue;
         if (!moment_default(from, "YYYY-MM-DD", true).isValid()) {
-          new import_obsidian3.Notice("Invalid From date. Use YYYY-MM-DD.");
+          new import_obsidian3.Notice("Invalid start date. Use yyyy-mm-dd.");
           return;
         }
         if (!moment_default(to, "YYYY-MM-DD", true).isValid()) {
-          new import_obsidian3.Notice("Invalid To date. Use YYYY-MM-DD.");
+          new import_obsidian3.Notice("Invalid end date. Use yyyy-mm-dd.");
           return;
         }
         if (from > to) {
-          new import_obsidian3.Notice("From date must be before or equal to To date.");
+          new import_obsidian3.Notice("Start date must be before or equal to end date.");
           return;
         }
         this.close();
@@ -194,9 +194,9 @@ var LastNDaysModal = class extends import_obsidian4.Modal {
   onOpen() {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.createEl("h2", { text: "Export last N days" });
+    contentEl.createEl("h2", { text: "Export last n days" });
     let inputEl;
-    new import_obsidian4.Setting(contentEl).setName("Days").setDesc("Use a preset or type a number.").addText((text) => {
+    new import_obsidian4.Setting(contentEl).setName("Number of days").setDesc("Use a preset or type a number.").addText((text) => {
       inputEl = text.inputEl;
       text.setValue(String(this.daysValue)).onChange((value) => {
         const parsed = Number.parseInt(value.trim(), 10);
@@ -312,7 +312,7 @@ function compileExcludePatterns(patterns) {
     }
     try {
       regexes.push(new RegExp(pattern));
-    } catch (error) {
+    } catch {
       invalid.push(pattern);
     }
   }
@@ -470,7 +470,7 @@ async function ensureFolderExists(app, folder) {
     await app.vault.createFolder(normalized);
   }
 }
-async function getAvailablePath(app, folder, baseName) {
+function getAvailablePath(app, folder, baseName) {
   const normalized = normalizeFolderPath(folder);
   const prefix = normalized ? `${normalized}/` : "";
   const basePath = `${prefix}${baseName}`;
@@ -496,16 +496,16 @@ function blockMetrics(block) {
 }
 async function exportDiaryBundle(app, settings, range) {
   if (!validateRange(range)) {
-    new import_obsidian5.Notice("Invalid date range. Use YYYY-MM-DD.");
+    new import_obsidian5.Notice("Invalid date range. Use yyyy-mm-dd.");
     return;
   }
   const includeLinkedNotes = settings.includeLinkedNotes;
   if (settings.depth !== 1) {
-    new import_obsidian5.Notice("Link depth > 1 is not supported yet. Using depth 1.");
+    new import_obsidian5.Notice("Link depth greater than 1 is not supported yet; using depth 1.");
   }
   const { regexes, invalid } = compileExcludePatterns(settings.excludePatterns);
   if (invalid.length > 0) {
-    new import_obsidian5.Notice(`Invalid excludePatterns: ${invalid.join(", ")}`);
+    new import_obsidian5.Notice(`Invalid exclude patterns: ${invalid.join(", ")}`);
   }
   const isExcluded = (file) => shouldExcludeFile(file, app.metadataCache.getFileCache(file), settings, regexes);
   const dailyMatches = listDailyFiles(app, settings, range, isExcluded);
@@ -645,7 +645,7 @@ async function exportDiaryBundle(app, settings, range) {
   const output = pieces.join("\n");
   await ensureFolderExists(app, settings.exportFolder);
   const filename = `DiaryBundle_${range.from}_to_${range.to}.md`;
-  const path = await getAvailablePath(app, settings.exportFolder, filename);
+  const path = getAvailablePath(app, settings.exportFolder, filename);
   try {
     const created = await app.vault.create(path, output);
     await app.workspace.getLeaf(true).openFile(created);
@@ -663,7 +663,7 @@ var JournalBundlePlugin = class extends import_obsidian6.Plugin {
     this.addSettingTab(new JournalBundleSettingTab(this.app, this));
     this.addCommand({
       id: "export-diary-range-bundle",
-      name: "Export Diary Range Bundle...",
+      name: "Export diary range bundle...",
       callback: () => {
         new DateRangeModal(this.app, async (from, to) => {
           await exportDiaryBundle(this.app, this.settings, { from, to });
@@ -672,7 +672,7 @@ var JournalBundlePlugin = class extends import_obsidian6.Plugin {
     });
     this.addCommand({
       id: "export-last-n-days-bundle",
-      name: "Export Last N Days Bundle...",
+      name: "Export last n days bundle...",
       callback: () => {
         new LastNDaysModal(this.app, async (days) => {
           const today = moment_default().startOf("day");
@@ -688,7 +688,8 @@ var JournalBundlePlugin = class extends import_obsidian6.Plugin {
   onunload() {
   }
   async loadSettings() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    const data = await this.loadData();
+    this.settings = Object.assign({}, DEFAULT_SETTINGS, data != null ? data : {});
   }
   async saveSettings() {
     await this.saveData(this.settings);

@@ -32,7 +32,7 @@ async function ensureFolderExists(app: App, folder: string): Promise<void> {
   }
 }
 
-async function getAvailablePath(app: App, folder: string, baseName: string): Promise<string> {
+function getAvailablePath(app: App, folder: string, baseName: string): string {
   const normalized = normalizeFolderPath(folder);
   const prefix = normalized ? `${normalized}/` : "";
   const basePath = `${prefix}${baseName}`;
@@ -67,17 +67,17 @@ export async function exportDiaryBundle(
   range: BundleRange
 ): Promise<void> {
   if (!validateRange(range)) {
-    new Notice("Invalid date range. Use YYYY-MM-DD.");
+    new Notice("Invalid date range. Use yyyy-mm-dd.");
     return;
   }
 
   const includeLinkedNotes = settings.includeLinkedNotes;
   if (settings.depth !== 1) {
-    new Notice("Link depth > 1 is not supported yet. Using depth 1.");
+    new Notice("Link depth greater than 1 is not supported yet; using depth 1.");
   }
   const { regexes, invalid } = compileExcludePatterns(settings.excludePatterns);
   if (invalid.length > 0) {
-    new Notice(`Invalid excludePatterns: ${invalid.join(", ")}`);
+    new Notice(`Invalid exclude patterns: ${invalid.join(", ")}`);
   }
 
   const isExcluded = (file: TFile) =>
@@ -246,7 +246,7 @@ export async function exportDiaryBundle(
   await ensureFolderExists(app, settings.exportFolder);
 
   const filename = `DiaryBundle_${range.from}_to_${range.to}.md`;
-  const path = await getAvailablePath(app, settings.exportFolder, filename);
+  const path = getAvailablePath(app, settings.exportFolder, filename);
 
   try {
     const created = await app.vault.create(path, output);

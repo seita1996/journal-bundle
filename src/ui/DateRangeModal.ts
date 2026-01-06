@@ -17,8 +17,8 @@ export class DateRangeModal extends Modal {
     contentEl.createEl("h2", { text: "Export diary range" });
 
     new Setting(contentEl)
-      .setName("From")
-      .setDesc("YYYY-MM-DD")
+      .setName("Start date")
+      .setDesc("Use yyyy-mm-dd.")
       .addText((text) => {
         text.setPlaceholder("2026-01-01").onChange((value) => {
           this.fromValue = value.trim();
@@ -26,8 +26,8 @@ export class DateRangeModal extends Modal {
       });
 
     new Setting(contentEl)
-      .setName("To")
-      .setDesc("YYYY-MM-DD")
+      .setName("End date")
+      .setDesc("Use yyyy-mm-dd.")
       .addText((text) => {
         text.setPlaceholder("2026-01-07").onChange((value) => {
           this.toValue = value.trim();
@@ -41,15 +41,15 @@ export class DateRangeModal extends Modal {
           const to = this.toValue;
 
           if (!moment(from, "YYYY-MM-DD", true).isValid()) {
-            new Notice("Invalid From date. Use YYYY-MM-DD.");
+            new Notice("Invalid start date. Use yyyy-mm-dd.");
             return;
           }
           if (!moment(to, "YYYY-MM-DD", true).isValid()) {
-            new Notice("Invalid To date. Use YYYY-MM-DD.");
+            new Notice("Invalid end date. Use yyyy-mm-dd.");
             return;
           }
           if (from > to) {
-            new Notice("From date must be before or equal to To date.");
+            new Notice("Start date must be before or equal to end date.");
             return;
           }
 
