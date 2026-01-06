@@ -1,0 +1,47 @@
+name: Build and Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Prepare release bundle
+        run: |
+          mkdir -p release
+          cp manifest.json release/
+          if [ -f main.js ]; then cp main.js release/; fi
+          if [ -f styles.css ]; then cp styles.css release/; fi
+          if [ -f LICENSE ]; then cp LICENSE release/; fi
+          if [ -f README.md ]; then cp README.md release/; fi
+          cd release
+          zip -r ../journal-bundle.zip .
+
+      - name: Upload release asset (zip)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: journal-bundle.zip
