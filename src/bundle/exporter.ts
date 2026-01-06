@@ -13,16 +13,16 @@ import {
 import { BundleStats, DailyEntry, LinkedEntry, BundleRange } from "./types";
 import moment from "../utils/moment";
 
-function normalizeFolderPrefix(folder: string): string {
+function normalizeFolderPath(folder: string): string {
   const trimmed = folder.trim();
   if (!trimmed) {
     return "";
   }
-  return trimmed.endsWith("/") ? trimmed : `${trimmed}/`;
+  return trimmed.replace(/\/+$/, "");
 }
 
 async function ensureFolderExists(app: App, folder: string): Promise<void> {
-  const normalized = normalizeFolderPrefix(folder);
+  const normalized = normalizeFolderPath(folder);
   if (!normalized) {
     return;
   }
@@ -33,14 +33,15 @@ async function ensureFolderExists(app: App, folder: string): Promise<void> {
 }
 
 async function getAvailablePath(app: App, folder: string, baseName: string): Promise<string> {
-  const normalized = normalizeFolderPrefix(folder);
-  const basePath = `${normalized}${baseName}`;
+  const normalized = normalizeFolderPath(folder);
+  const prefix = normalized ? `${normalized}/` : "";
+  const basePath = `${prefix}${baseName}`;
   if (!app.vault.getAbstractFileByPath(basePath)) {
     return basePath;
   }
   let index = 1;
   while (true) {
-    const candidate = `${normalized}${baseName.replace(/\.md$/, "")} (${index}).md`;
+    const candidate = `${prefix}${baseName.replace(/\.md$/, "")} (${index}).md`;
     if (!app.vault.getAbstractFileByPath(candidate)) {
       return candidate;
     }

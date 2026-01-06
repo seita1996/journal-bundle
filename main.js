@@ -453,15 +453,15 @@ function buildStatsSection(stats) {
 }
 
 // src/bundle/exporter.ts
-function normalizeFolderPrefix3(folder) {
+function normalizeFolderPath(folder) {
   const trimmed = folder.trim();
   if (!trimmed) {
     return "";
   }
-  return trimmed.endsWith("/") ? trimmed : `${trimmed}/`;
+  return trimmed.replace(/\/+$/, "");
 }
 async function ensureFolderExists(app, folder) {
-  const normalized = normalizeFolderPrefix3(folder);
+  const normalized = normalizeFolderPath(folder);
   if (!normalized) {
     return;
   }
@@ -471,14 +471,15 @@ async function ensureFolderExists(app, folder) {
   }
 }
 async function getAvailablePath(app, folder, baseName) {
-  const normalized = normalizeFolderPrefix3(folder);
-  const basePath = `${normalized}${baseName}`;
+  const normalized = normalizeFolderPath(folder);
+  const prefix = normalized ? `${normalized}/` : "";
+  const basePath = `${prefix}${baseName}`;
   if (!app.vault.getAbstractFileByPath(basePath)) {
     return basePath;
   }
   let index = 1;
   while (true) {
-    const candidate = `${normalized}${baseName.replace(/\.md$/, "")} (${index}).md`;
+    const candidate = `${prefix}${baseName.replace(/\.md$/, "")} (${index}).md`;
     if (!app.vault.getAbstractFileByPath(candidate)) {
       return candidate;
     }
