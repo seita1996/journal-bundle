@@ -44,4 +44,7 @@ jobs:
       - name: Upload release asset (zip)
         uses: softprops/action-gh-release@v2
         with:
-          files: journal-bundle.zip
+          files: |
+            journal-bundle.zip
+            main.js
+            manifest.json
